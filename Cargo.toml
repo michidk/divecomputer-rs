@@ -3,7 +3,7 @@ resolver = "3"
 members = ["crates/*"]
 
 [workspace.package]
-version = "0.0.0"
+version = "0.1.0"
 authors = ["Michael Lohr <michael@lohr.dev>"]
 edition = "2024"
 rust-version = "1.85"
@@ -15,12 +15,11 @@ categories = ["hardware-support", "parser-implementations", "no-std", "wasm"]
 
 [workspace.dependencies]
 crc = { version = "3.4", default-features = false }
-divecomputer-core = { version = "0.0.0", path = "crates/divecomputer-core" }
-divecomputer-export = { version = "0.0.0", path = "crates/divecomputer-export" }
-divecomputer-protocol = { version = "0.0.0", path = "crates/divecomputer-protocol" }
-divecomputer-transport = { version = "0.0.0", path = "crates/divecomputer-transport" }
-# Pinned Git revision until divejson is on crates.io; then use the release.
-divejson = { version = "0.0.0", git = "https://github.com/michidk/divejson-rs", rev = "cd679c006df76afffb3194c0b052a00dfde03989", default-features = false }
+divecomputer-core = { version = "0.1.0", path = "crates/divecomputer-core" }
+divecomputer-export = { version = "0.1.0", path = "crates/divecomputer-export" }
+divecomputer-protocol = { version = "0.1.0", path = "crates/divecomputer-protocol" }
+divecomputer-transport = { version = "0.1.0", path = "crates/divecomputer-transport" }
+divejson = { version = "0.1.0", default-features = false }
 insta = "1"
 js-sys = "=0.3.106"
 jiff = { version = "1.0.3", default-features = false }
