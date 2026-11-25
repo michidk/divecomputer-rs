@@ -1,0 +1,26 @@
+[package]
+name = "divecomputer-core"
+description = "Shared building blocks for dive computer protocols: checksums, framing and the dive data model"
+readme = "README.md"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[features]
+## `serde::Serialize` for the dive model.
+serde = ["dep:serde", "jiff/serde"]
+
+[dependencies]
+crc.workspace = true
+jiff.workspace = true
+serde = { workspace = true, optional = true }
+thiserror.workspace = true
+
+[lints]
+workspace = true

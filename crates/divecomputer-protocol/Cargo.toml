@@ -1,0 +1,26 @@
+[package]
+name = "divecomputer-protocol"
+description = "Dive computer download protocols, one module per protocol family"
+readme = "README.md"
+publish = false
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[features]
+default = ["shearwater"]
+## Shearwater Predator, Petrel, Perdix, NERD, Teric, Peregrine, Tern.
+shearwater = []
+
+[dependencies]
+divecomputer-core.workspace = true
+jiff.workspace = true
+
+[lints]
+workspace = true

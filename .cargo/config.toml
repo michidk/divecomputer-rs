@@ -1,0 +1,4 @@
+# Web Bluetooth, WebUSB, WebHID and Web Serial bindings in web-sys are unstable APIs.
+# CI sets RUSTFLAGS, which replaces this; checks.yml passes the same flag.
+[target.wasm32-unknown-unknown]
+rustflags = ["--cfg=web_sys_unstable_apis"]

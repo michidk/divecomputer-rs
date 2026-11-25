@@ -1,0 +1,27 @@
+[package]
+name = "divecomputer-export"
+description = "Export downloaded dives to open dive-log formats (DiveJSON)"
+readme = "README.md"
+publish = false
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[dependencies]
+divecomputer-core.workspace = true
+divejson.workspace = true
+thiserror.workspace = true
+uuid.workspace = true
+
+[dev-dependencies]
+divecomputer-protocol.workspace = true
+insta.workspace = true
+
+[lints]
+workspace = true

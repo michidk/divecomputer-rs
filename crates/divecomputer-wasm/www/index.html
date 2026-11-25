@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shearwater download test</title>
+  <style>
+    :root { color-scheme: light dark; --muted: #6b7280; --border: #d1d5db; --error: #b91c1c; }
+    @media (prefers-color-scheme: dark) { :root { --muted: #9ca3af; --border: #374151; --error: #f87171; } }
+    body { font: 16px/1.5 system-ui, sans-serif; max-width: 48rem; margin: 2rem auto; padding: 0 1rem; }
+    button { font: inherit; padding: 0.5rem 1rem; cursor: pointer; }
+    #status { color: var(--muted); }
+    #status.error { color: var(--error); }
+    table { border-collapse: collapse; width: 100%; margin-top: 1rem; font-variant-numeric: tabular-nums; }
+    th, td { text-align: left; padding: 0.25rem 0.5rem; border-bottom: 1px solid var(--border); }
+    code { font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <h1>Shearwater download test</h1>
+  <p>
+    Downloads the raw dives from a Shearwater dive computer over Bluetooth Low Energy,
+    using the divecomputer-rs WebAssembly build. Needs a Chromium-based browser
+    (Chrome, Edge) with Web Bluetooth. Put the computer in Bluetooth upload mode first.
+  </p>
+  <p>
+    <button id="download" type="button">Connect and download</button>
+    <button id="save" type="button" hidden>Save dives (JSON)</button>
+    <button id="save-divejson" type="button" hidden>Save DiveJSON</button>
+    <button id="save-uddf" type="button" hidden>Save UDDF</button>
+  </p>
+  <p id="status" role="status" aria-live="polite"></p>
+  <table id="dives" hidden>
+    <thead><tr><th scope="col">#</th><th scope="col">Start (device clock)</th><th scope="col">Fingerprint</th><th scope="col">Bytes</th><th scope="col">Max depth</th><th scope="col">Duration</th><th scope="col">Mode</th><th scope="col">Samples</th></tr></thead>
+    <tbody></tbody>
+  </table>
+
+  <script type="module">
+    import init, { downloadShearwater, exportDiveJson, exportUddf, shearwaterServiceUuid } from "./pkg/divecomputer_wasm.js";
+
+    // Advertised name prefixes from the specification (shearwater.md, "Devices").
+    const NAME_PREFIXES = ["Predator", "Petrel", "NERD", "Perdix", "Teric", "Peregrine", "Tern"];
+
+    const status = document.getElementById("status");
+    const downloadButton = document.getElementById("download");
+    const saveButton = document.getElementById("save");
+    const saveDiveJsonButton = document.getElementById("save-divejson");
+    const saveUddfButton = document.getElementById("save-uddf");
+    const table = document.getElementById("dives");
+    const rows = table.querySelector("tbody");
+    let result = null;
+
+    const hex = (bytes) => Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
+    const setStatus = (text, isError = false) => {
+      status.textContent = text;
+      status.classList.toggle("error", isError);
+    };
+
+    function addRow(dive, index) {
+      // The fingerprint is the dive start time, u32 big-endian seconds on the device's
+      // local clock, so it is shown without a time zone.
+      const seconds = new DataView(dive.fingerprint.buffer, dive.fingerprint.byteOffset).getUint32(0);
+      const start = new Date(seconds * 1000).toISOString().replace("T", " ").slice(0, 19);
+      const row = rows.insertRow();
+      const parsed = dive.dive;
+      const summary = parsed
+        ? [
+            parsed.max_depth == null ? "" : `${parsed.max_depth.toFixed(1)} m`,
+            parsed.duration == null ? "" : `${Math.round(parsed.duration / 60000)} min`,
+            parsed.mode ?? "",
+            parsed.samples.length,
+          ]
+        : [`Parse error: ${dive.parseError}`, "", "", ""];
+      for (const text of [index + 1, start, hex(dive.fingerprint), dive.data.length, ...summary]) {
+        row.insertCell().textContent = text;
+      }
+    }
+
+    if (!navigator.bluetooth) {
+      downloadButton.disabled = true;
+      setStatus("This browser has no Web Bluetooth. Use Chrome or Edge on desktop or Android.", true);
+    } else if (!(await navigator.bluetooth.getAvailability())) {
+      setStatus("The browser can't see a Bluetooth adapter. Turn Bluetooth on, or use a device that has one.", true);
+    }
+
+    await init();
+
+    downloadButton.addEventListener("click", async () => {
+      let device;
+      try {
+        device = await navigator.bluetooth.requestDevice({
+          filters: NAME_PREFIXES.map((namePrefix) => ({ namePrefix })),
+          optionalServices: [shearwaterServiceUuid()],
+        });
+      } catch (error) {
+        setStatus(`No device selected: ${error.message}`, true);
+        return;
+      }
+
+      downloadButton.disabled = true;
+      saveButton.hidden = true;
+      saveDiveJsonButton.hidden = saveUddfButton.hidden = true;
+      rows.replaceChildren();
+      table.hidden = false;
+      setStatus(`Connecting to ${device.name}…`);
+      let count = 0;
+      try {
+        result = await downloadShearwater(device, null, (dive) => {
+          addRow(dive, count++);
+          setStatus(`Downloading… ${count} dive${count === 1 ? "" : "s"} so far`);
+        });
+        result.deviceName = device.name;
+        setStatus(`${result.model}, serial ${result.serial}, firmware ${result.firmware}: ${result.dives.length} dives downloaded.`);
+        saveButton.hidden = result.dives.length === 0;
+        saveDiveJsonButton.hidden = saveUddfButton.hidden = !result.dives.some((dive) => dive.dive);
+      } catch (error) {
+        setStatus(`Download failed: ${error.message}`, true);
+      } finally {
+        downloadButton.disabled = false;
+      }
+    });
+
+    saveButton.addEventListener("click", () => {
+      const json = JSON.stringify({
+        device: result.deviceName,
+        model: result.model,
+        serial: result.serial,
+        firmware: result.firmware,
+        dives: result.dives.map((dive) => ({ fingerprint: hex(dive.fingerprint), data: hex(dive.data), dive: dive.dive, parseError: dive.parseError })),
+      }, null, 2);
+      save(json, "application/json", `shearwater-${result.serial}.json`);
+    });
+
+    function saveExport(format, exporter, type, extension) {
+      // Dives that failed to parse cannot be exported; the raw JSON save keeps them.
+      const parsed = result.dives.filter((dive) => dive.dive);
+      try {
+        const text = exporter(parsed.map((dive) => dive.data));
+        save(text, type, `shearwater-${result.serial}.${extension}`);
+        const skipped = result.dives.length - parsed.length;
+        setStatus(`Saved ${parsed.length} dives as ${format}${skipped ? `; ${skipped} that failed to parse were left out` : ""}.`);
+      } catch (error) {
+        setStatus(`${format} export failed: ${error.message}`, true);
+      }
+    }
+    saveDiveJsonButton.addEventListener("click", () => saveExport("DiveJSON", exportDiveJson, "application/vnd.dive+json", "divejson"));
+    saveUddfButton.addEventListener("click", () => saveExport("UDDF", exportUddf, "application/xml", "uddf"));
+
+    function save(text, type, name) {
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(new Blob([text], { type }));
+      link.download = name;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+[book]
+title = "Dive Computer Protocols"
+description = "Open specification of dive computer download protocols and dive data formats"
+authors = ["divecomputer-rs contributors"]
+language = "en"
+src = "."
+
+[build]
+build-dir = "book"
+
+[output.html]
+git-repository-url = "https://github.com/michidk/divecomputer-rs"
+edit-url-template = "https://github.com/michidk/divecomputer-rs/edit/main/docs/{path}"
+additional-css = ["theme/custom.css"]
+additional-js = ["theme/table-scroll.js"]
+
+[output.html.search]
+limit-results = 40

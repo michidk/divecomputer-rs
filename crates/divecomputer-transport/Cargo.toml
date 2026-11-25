@@ -1,0 +1,28 @@
+[package]
+name = "divecomputer-transport"
+description = "Transport backends for dive computer protocols: Web Bluetooth today"
+readme = "README.md"
+publish = false
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[features]
+default = ["ble"]
+## Bluetooth Low Energy: Web Bluetooth in the browser.
+ble = ["web-sys/Bluetooth", "web-sys/BluetoothDevice", "web-sys/BluetoothRemoteGattServer", "web-sys/BluetoothRemoteGattService", "web-sys/BluetoothRemoteGattCharacteristic", "web-sys/Event", "web-sys/EventTarget"]
+
+[target.'cfg(all(target_arch = "wasm32", target_os = "unknown"))'.dependencies]
+divecomputer-core.workspace = true
+js-sys.workspace = true
+wasm-bindgen.workspace = true
+web-sys.workspace = true
+
+[lints]
+workspace = true
