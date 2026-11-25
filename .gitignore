@@ -1,3 +1,15 @@
 /docs/book/
 /target/
 /crates/divecomputer-wasm/www/pkg/
+
+# Local agent state and task notes.
+/.codex/
+/.claude/
+/.serena/
+/.agents/
+/.gitnexus/
+/todo.md
+
+# Unaccepted Insta snapshot output.
+*.pending-snap
+*.snap.new
