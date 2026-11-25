@@ -48,7 +48,7 @@ checksum = "217698eaf96b4a3f0bc4f3662aaa55bdf913cd54d7204591faa790070c6d0853"
 
 [[package]]
 name = "divecomputer-core"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "crc",
  "jiff",
@@ -58,7 +58,7 @@ dependencies = [
 
 [[package]]
 name = "divecomputer-export"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "divecomputer-core",
  "divecomputer-protocol",
@@ -70,7 +70,7 @@ dependencies = [
 
 [[package]]
 name = "divecomputer-protocol"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "divecomputer-core",
  "jiff",
@@ -78,7 +78,7 @@ dependencies = [
 
 [[package]]
 name = "divecomputer-transport"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "divecomputer-core",
  "js-sys",
@@ -88,7 +88,7 @@ dependencies = [
 
 [[package]]
 name = "divecomputer-wasm"
-version = "0.0.0"
+version = "0.1.0"
 dependencies = [
  "divecomputer-core",
  "divecomputer-export",
@@ -105,8 +105,9 @@ dependencies = [
 
 [[package]]
 name = "divejson"
-version = "0.0.0"
-source = "git+https://github.com/michidk/divejson-rs?rev=cd679c006df76afffb3194c0b052a00dfde03989#cd679c006df76afffb3194c0b052a00dfde03989"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7c706811d66570f475873f277ae65c1b754374e9a390e971702af5434b91b0dd"
 dependencies = [
  "jiff",
  "serde",
@@ -477,8 +478,9 @@ dependencies = [
 
 [[package]]
 name = "uddf"
-version = "0.0.0"
-source = "git+https://github.com/michidk/uddf-rs?rev=07fd28c0386536e56e8f848400f27c0286c6552c#07fd28c0386536e56e8f848400f27c0286c6552c"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "06ff42c03e507f21d0b1bc49a20c2efd6a3c2bb814b81e0c074c6910330b3417"
 dependencies = [
  "jiff",
  "quick-xml",

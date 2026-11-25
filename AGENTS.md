@@ -32,8 +32,8 @@ code; see [Clean-room rules](#clean-room-rules).
   (DiveJSON export of the dive model, through the `divejson` crate) and
   `divecomputer-wasm` (JavaScript bindings and a test page in `www/`). All but core are
   `publish = false` until they are ready; the other crates in ARCHITECTURE.md are added
-  as they are built. `divejson` and its `uddf` dependency use pinned Git revisions
-  until they are on crates.io; no sibling checkouts are required.
+  as they are built. `divejson` and its `uddf` dependency use published crates.io
+  releases; no sibling checkouts are required.
   Browser-only code is gated on `all(target_arch = "wasm32", target_os = "unknown")`.
   Protocol integration tests live in `crates/<crate>/tests/`. Workspace-wide settings
   live in the root `Cargo.toml` (`[workspace.package]`, `[workspace.dependencies]`,

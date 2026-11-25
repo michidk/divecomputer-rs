@@ -6,7 +6,7 @@ computers over Web Bluetooth (Chromium-based browsers only) and parses them.
 
 ## Build
 
-The crate builds against pinned Git revisions of
+The crate builds against published crates.io releases of
 [divejson-rs](https://github.com/michidk/divejson-rs) and
 [uddf-rs](https://github.com/michidk/uddf-rs). No sibling checkouts are required.
 

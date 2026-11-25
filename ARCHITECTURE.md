@@ -179,8 +179,8 @@ recording:
   stop depth and time, remaining gas time, vendor events, `max_temperature`,
   `water_density`, tank names and transmitter serials, bookmark headings.
 
-**Open:** `divejson` (and, through its `uddf` feature, the `uddf` crate) use pinned
-Git revisions until they are published on crates.io.
+`divejson` and, through its `uddf` feature, `uddf` use their published crates.io
+releases. No Git or sibling-path dependency is needed.
 
 ### Errors
 
