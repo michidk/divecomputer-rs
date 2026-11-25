@@ -13,3 +13,6 @@
 # Unaccepted Insta snapshot output.
 *.pending-snap
 *.snap.new
+
+# Browser test dependencies.
+node_modules/

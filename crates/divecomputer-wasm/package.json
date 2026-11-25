@@ -1,0 +1,11 @@
+{
+  "name": "divecomputer-browser-tools",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "bun test tests"
+  },
+  "devDependencies": {
+    "happy-dom": "21.0.4"
+  }
+}

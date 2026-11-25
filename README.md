@@ -45,6 +45,16 @@ see the [conventions](docs/spec/conventions.md).
 The specification is written from scratch under the same licence as the code. Facts may come
 from any public source; no code or text is copied from other dive-log software.
 
+## Browser tools
+
+- [Download from a Shearwater computer](https://michidk.github.io/divecomputer-rs/tools/)
+  over Web Bluetooth, or reopen a saved raw JSON download.
+- [Convert DiveJSON and UDDF files](https://michidk.github.io/divecomputer-rs/tools/convert.html)
+  on your device, with a report of conversion decisions.
+
+Both tools keep dive data on your device. Bluetooth download needs Chrome or Edge on
+desktop or Android. The file converter works without Bluetooth.
+
 ## Supported dive computers
 
 | Manufacturer | Devices | Transports | Specification |

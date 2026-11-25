@@ -16,3 +16,9 @@ additional-js = ["theme/table-scroll.js"]
 
 [output.html.search]
 limit-results = 40
+
+# mdBook emits README chapters as index.html; preserve links to the older spelling.
+[output.html.redirect]
+"spec/README.html" = "index.html"
+"spec/transports/README.html" = "index.html"
+"spec/families/README.html" = "index.html"

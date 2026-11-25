@@ -13,7 +13,10 @@ Shearwater log parser (block and native formats). `divecomputer-transport` has t
 Bluetooth `PacketLink` and a `setTimeout` clock. `divecomputer-export` writes the dive
 model as DiveJSON through the `divejson` crate (see [Export](#export)), and
 `divecomputer-wasm` exposes `downloadShearwater` (raw and parsed dives),
-`parseShearwaterDive`, `exportDiveJson` and `exportUddf` to JavaScript. The facade, the other export
+`parseShearwaterDive`, `exportDiveJson`, `exportUddf`, `convertDiveJsonToUddf` and
+`convertUddfToDiveJson` to JavaScript. The browser tools in `www/` keep file data on the
+user's device. `scripts/build-pages.sh` builds the book and stages both tools under
+`tools/` in the same GitHub Pages artifact. The facade, the other export
 formats, the CLI and native backends are not written yet. Decisions marked **open** need a
 prototype before they are final.
 

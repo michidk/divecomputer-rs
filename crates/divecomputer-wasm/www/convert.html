@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Convert DiveJSON and UDDF dive logs privately in your browser.">
+  <title>Convert dive logs</title>
+  <link rel="stylesheet" href="tools.css">
+</head>
+<body>
+  <nav aria-label="Main navigation">
+    <a href="index.html">Download from a dive computer</a>
+    <a href="convert.html" aria-current="page">Convert dive logs</a>
+    <a href="../index.html">Protocol documentation</a>
+  </nav>
+  <main>
+    <h1>Convert dive logs</h1>
+    <p>Open a DiveJSON or UDDF file and save it in the other format. Your dive logs stay on this device.</p>
+    <section class="workspace" aria-label="File converter">
+      <label for="source">Choose a dive-log file</label>
+      <input id="source" type="file" accept=".json,.divejson,.uddf,.xml,application/json,application/xml,text/xml" disabled aria-describedby="file-help">
+      <p id="file-help" class="muted">Supports DiveJSON 1.0 and UDDF XML, up to 64 MiB. Other dive-log formats are not supported yet.</p>
+      <p id="status" role="status" aria-live="polite">Loading converter…</p>
+      <div id="result" hidden>
+        <div class="actions">
+          <button id="save" type="button">Download converted file</button>
+          <button id="save-report" type="button">Download conversion report</button>
+        </div>
+        <details id="report">
+          <summary id="report-summary">Conversion notes</summary>
+          <p>Formats describe dives differently. Review any omitted values or conversion decisions before using the result.</p>
+          <ol id="notes"></ol>
+        </details>
+      </div>
+    </section>
+    <p>Have a Shearwater computer or a saved raw download? <a href="index.html">Open the downloader</a>.</p>
+    <noscript><p class="error">Enable JavaScript to convert files on this device.</p></noscript>
+  </main>
+  <footer>Open-source tools from <a href="https://github.com/michidk/divecomputer-rs">divecomputer-rs</a>. No account or file upload required.</footer>
+  <script type="module" src="converter.js"></script>
+</body>
+</html>
