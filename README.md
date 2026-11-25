@@ -102,7 +102,8 @@ assert_eq!(Xor8::of(&[0x05, 0x00, 0x16, 0x14]).value(), 0x07);
 
 `divecomputer-export` and `divecomputer-wasm` build against the
 [divejson-rs](https://github.com/michidk/divejson-rs) and
-[uddf-rs](https://github.com/michidk/uddf-rs) repositories, checked out next to this one.
+[uddf-rs](https://github.com/michidk/uddf-rs) repositories at pinned Git revisions.
+Cargo fetches them automatically; no sibling checkouts are needed.
 [ARCHITECTURE.md](ARCHITECTURE.md) describes how the crates fit together and how one
 protocol implementation targets both native platforms and the browser.
 

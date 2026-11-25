@@ -19,8 +19,8 @@ divecomputer-core = { version = "0.0.0", path = "crates/divecomputer-core" }
 divecomputer-export = { version = "0.0.0", path = "crates/divecomputer-export" }
 divecomputer-protocol = { version = "0.0.0", path = "crates/divecomputer-protocol" }
 divecomputer-transport = { version = "0.0.0", path = "crates/divecomputer-transport" }
-# Sibling checkout until divejson is on crates.io; then drop `path`.
-divejson = { version = "0.0.0", path = "../divejson-rs", default-features = false }
+# Pinned Git revision until divejson is on crates.io; then use the release.
+divejson = { version = "0.0.0", git = "https://github.com/michidk/divejson-rs", rev = "cd679c006df76afffb3194c0b052a00dfde03989", default-features = false }
 insta = "1"
 js-sys = "=0.3.106"
 jiff = { version = "1.0.3", default-features = false }
