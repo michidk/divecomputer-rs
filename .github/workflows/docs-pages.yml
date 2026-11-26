@@ -51,10 +51,10 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          bun-version: "1.4.4"
+          bun-version: "1.4.5"
 
       - name: Install web build tools
-        uses: taiki-e/install-action@cfdb7ed4ccc7c7dce37759eae89dc5674b469b39 # v2.90.3
+        uses: taiki-e/install-action@893d6ee8d714b6c7dfe2bcd94e5759e9a7958a7e # v2.90.10
         with:
           # wasm-bindgen must match Cargo.toml; build-web.sh verifies it.
           tool: mdbook@0.5.4,wasm-bindgen-cli@0.2.129
