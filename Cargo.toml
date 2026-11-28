@@ -21,16 +21,16 @@ divecomputer-protocol = { version = "0.1.0", path = "crates/divecomputer-protoco
 divecomputer-transport = { version = "0.1.0", path = "crates/divecomputer-transport" }
 divejson = { version = "0.1.0", default-features = false }
 insta = "1"
-js-sys = "=0.3.106"
+js-sys = "=0.3.107"
 jiff = { version = "1.0.3", default-features = false }
 serde = { version = "1", default-features = false, features = ["alloc", "derive"] }
 serde-wasm-bindgen = "0.6"
 thiserror = { version = "2", default-features = false }
 uuid = { version = "1.16", default-features = false, features = ["v5"] }
 # Pinned: must match the wasm-bindgen CLI version that generates the JavaScript glue.
-wasm-bindgen = "=0.2.129"
-wasm-bindgen-futures = "=0.4.79"
-web-sys = "=0.3.106"
+wasm-bindgen = "=0.2.130"
+wasm-bindgen-futures = "=0.4.80"
+web-sys = "=0.3.107"
 
 [workspace.lints.rust]
 unsafe_code = "forbid"
